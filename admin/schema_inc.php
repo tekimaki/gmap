@@ -1,4 +1,22 @@
 <?php
+
+global $gBitSystem;
+
+$gBitSystem->registerPackageInfo( GMAP_PKG_NAME, array(
+	'description' => "For creating wiki-like Google Maps as well as viewing other bitweaver content (with location information) on Google Maps.",
+	'license' => '<a href="http://www.gnu.org/licenses/licenses.html#LGPL">LGPL</a>',
+));
+
+// Requirements
+$gBitSystem->registerRequirements( GMAP_PKG_NAME, array(
+    'liberty' => array( 'min' => '2.1.4' ),
+));
+
+
+// Install process
+global $gBitInstaller;
+if( is_object( $gBitInstaller ) ){
+
 $tables = array(
 //@todo should allow_comments be here, or will this be covered by Liberty?
 //maptype is keyed to custom maptype_id. 0, 1, and 2 are reserved for Google's Street, Satellite, and Hybrid types
@@ -250,16 +268,9 @@ $tables = array(
 );
 
 
-global $gBitInstaller;
-
 foreach( array_keys( $tables ) AS $tableName ) {
 	$gBitInstaller->registerSchemaTable( GMAP_PKG_NAME, $tableName, $tables[$tableName] );
 }
-
-$gBitInstaller->registerPackageInfo( GMAP_PKG_NAME, array(
-	'description' => "For creating wiki-like Google Maps as well as viewing other bitweaver content (with location information) on Google Maps.",
-	'license' => '<a href="http://www.gnu.org/licenses/licenses.html#LGPL">LGPL</a>',
-));
 
 // Package Requirements
 $gBitInstaller->registerRequirements( GMAP_PKG_NAME, array(
@@ -369,7 +380,4 @@ $gBitInstaller->registerContentObjects( GMAP_PKG_NAME, array(
 	'BitGmapPolylineSet' => GMAP_PKG_PATH.'BitGmapPolylineSet.php',
 ));
 
-// Requirements
-$gBitInstaller->registerRequirements( GMAP_PKG_NAME, array(
-    'liberty' => array( 'min' => '2.1.4' ),
-));
+}
