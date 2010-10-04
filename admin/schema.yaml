@@ -1,0 +1,329 @@
+---
+gmap: 
+  version: 1.1.2
+  required: false
+  requirements: 
+    liberty: 
+      min: 2.1.4
+  description: >
+    For creating wiki-like Google Maps as well as viewing other bitweaver content (with location information) on Google Maps.
+  license: 
+    name: LGPL
+    description: Licensed under the GNU LESSER GENERAL PUBLIC LICENSE.
+    url: http://www.gnu.org/copyleft/lesser.html 
+  homeable: false
+  tables: 
+    gmaps: |
+      
+      gmap_id I4 PRIMARY,
+      content_id I4 NOTNULL,
+      width I4 DEFAULT 0,
+      height I4 DEFAULT 0,
+      zoom I4 DEFAULT 16,
+      maptype I4 DEFAULT 0,
+      zoom_control C(1) DEFAULT 's',
+      maptype_control C(5) DEFAULT 'true',
+      overview_control C(5) DEFAULT 'true',
+      scale C(5) DEFAULT 'true'
+      CONSTRAINT ', CONSTRAINT `gmaps_ref` FOREIGN KEY (`content_id`) REFERENCES `liberty_content`( `content_id` )'
+      
+    gmaps_sets_keychain: |
+      
+      gmap_id I4 NOTNULL,
+      set_type c(32) NOTNULL,
+      set_id I4 NOTNULL,
+      plot_on_load C(5) DEFAULT 'true',
+      side_panel C(5) DEFAULT 'true',
+      explode C(5) DEFAULT 'true',
+      pos F
+      CONSTRAINTS ', CONSTRAINT `gmaps_sets_keychain_gmap_ref` FOREIGN KEY (`gmap_id`) REFERENCES `gmaps`( `gmap_id` )'
+      
+    gmaps_maptypes: |
+      
+      maptype_id I4 PRIMARY,
+      name C(64),
+      shortname C(4),
+      description X,
+      minzoom I4,
+      maxzoom I4,
+      errormsg C(255),
+      user_id I4
+      CONSTRAINTS ', CONSTRAINT `gmaps_maptypes_ref` FOREIGN KEY (`user_id`) REFERENCES `users_users`( `user_id` )'
+      
+    gmaps_tilelayers: |
+      
+      tilelayer_id I4 PRIMARY,
+      tiles_name C(64),
+      tiles_minzoom I4,
+      tiles_maxzoom I4,
+      ispng C(5) DEFAULT 'false',
+      tilesurl X,
+      opacity F
+      
+    gmaps_copyrights: |
+      
+      copyright_id I4 PRIMARY,
+      copyright_minzoom I4,
+      bounds X,
+      notice C(64)
+      
+    gmaps_tilelayers_keychain: |
+      
+      maptype_id I4 NOTNULL,
+      tilelayer_id I4 NOTNULL,
+      pos F
+      CONSTRAINT ', CONSTRAINT `gmaps_tilelayers_k_maptype_ref` FOREIGN KEY (`maptype_id`) REFERENCES `gmaps_maptypes`( `maptype_id` )
+      , CONSTRAINT `gmaps_tilelayers_k_tlayers_ref` FOREIGN KEY (`tilelayer_id`) REFERENCES `gmaps_tilelayers`( `tilelayer_id` )'
+      
+    gmaps_copyrights_keychain: |
+      
+      copyright_id I4 NOTNULL,
+      tilelayer_id I4 NOTNULL
+      CONSTRAINT ', CONSTRAINT `gmaps_copyrts_k_copyright_ref` FOREIGN KEY (`copyright_id`) REFERENCES `gmaps_copyrights`( `copyright_id` )
+      , CONSTRAINT `gmaps_copyrts__tilelayers_ref` FOREIGN KEY (`tilelayer_id`) REFERENCES `gmaps_tilelayers`( `tilelayer_id` )'
+      
+    gmaps_markers: |
+      
+      marker_id I8 PRIMARY,
+      content_id I4 NOTNULL,
+      label_data X,
+      zindex I8 DEFAULT 0
+      CONSTRAINT ', CONSTRAINT `gmaps_markers_ref` FOREIGN KEY (`content_id`) REFERENCES `liberty_content`( `content_id` )'
+      
+    gmaps_icon_themes: |
+      
+      theme_id I4 PRIMARY,
+      theme_title C(64)
+      
+    gmaps_icon_styles: |
+      
+      icon_id I4 PRIMARY,
+      theme_id I4 NOTNULL,
+      name C(64),
+      icon_style_type I2 DEFAULT 0,
+      image X '/gmap/icons/FlatColorPins/205.png',
+      rollover_image X '/gmap/icons/FlatColorPins/090.png',
+      icon_w I4 DEFAULT 20,
+      icon_h I4 DEFAULT 34,
+      shadow_image X DEFAULT 'http://www.google.com/mapfiles/shadow50.png',
+      shadow_w I4 DEFAULT 37,
+      shadow_h I4 DEFAULT 34,
+      icon_anchor_x I4 DEFAULT 9,
+      icon_anchor_y I4 DEFAULT 34,
+      shadow_anchor_x I4 DEFAULT 18,
+      shadow_anchor_y I4 DEFAULT 25,
+      infowindow_anchor_x I4 DEFAULT 9,
+      infowindow_anchor_y I4 DEFAULT 2,
+      image_map X DEFAULT 0,
+      user_id I4
+      CONSTRAINTS ', CONSTRAINT `gmaps_icon_styles_ref` FOREIGN KEY (`user_id`) REFERENCES `users_users`( `user_id` )
+      , CONSTRAINT `gmaps_icon_theme_ref` FOREIGN KEY (`theme_id`) REFERENCES `gmaps_icon_themes`( `theme_id` )'
+      '
+      
+    gmaps_marker_styles: |
+      
+      style_id I4 PRIMARY,
+      name C(64),
+      marker_style_type I2 DEFAULT 0,
+      label_hover_opacity I4 DEFAULT 70,
+      label_opacity I4 DEFAULT 100,
+      label_hover_styles C(255) DEFAULT 'border:none; color:black; background-color:#ccc',
+      window_styles C(255) DEFAULT 'border:none; color:black; background-color:white',
+      user_id I4
+      CONSTRAINTS ', CONSTRAINT `gmaps_marker_styles_ref` FOREIGN KEY (`user_id`) REFERENCES `users_users`( `user_id` )'
+      
+    gmaps_marker_sets: |
+      
+      set_id I4 PRIMARY,
+      content_id I4 NOTNULL,
+      style_id I4 NOTNULL,
+      icon_id I4 NOTNULL
+      CONSTRAINT ', CONSTRAINT `gmaps_marker_sets_ref` FOREIGN KEY (`content_id`) REFERENCES `liberty_content`( `content_id` )'
+      
+    gmaps_marker_keychain: |
+      
+      set_id I4 NOTNULL,
+      marker_id I8 NOTNULL,
+      pos F
+      CONSTRAINT ', CONSTRAINT `gmaps_marker_keychain_set_ref` FOREIGN KEY (`set_id`) REFERENCES `gmaps_marker_sets`( `set_id` )
+      , CONSTRAINT `gmaps_marker_key_marker_ref` FOREIGN KEY (`marker_id`) REFERENCES `gmaps_markers`( `marker_id` )'
+      
+    gmaps_polylines: |
+      
+      polyline_id I4 PRIMARY,
+      content_id I4 NOTNULL,
+      poly_data X,
+      type I4 DEFAULT 0,
+      levels_data X,
+      zoom_factor I4,
+      num_levels I4
+      CONSTRAINT ', CONSTRAINT `gmaps_polylines_ref` FOREIGN KEY (`content_id`) REFERENCES `liberty_content`( `content_id` )'
+      
+    gmaps_polyline_styles: |
+      
+      style_id I4 PRIMARY,
+      name C(64),
+      color C(6) DEFAULT 'ff3300',
+      weight I4 DEFAULT 2,
+      opacity F DEFAULT 1,
+      user_id I4
+      CONSTRAINTS ', CONSTRAINT `gmaps_polyline_styles_ref` FOREIGN KEY (`user_id`) REFERENCES `users_users`( `user_id` )'
+      
+    gmaps_polyline_sets: |
+      
+      set_id I4 PRIMARY,
+      content_id I4 NOTNULL,
+      style_id I4 NOTNULL
+      CONSTRAINT ', CONSTRAINT `gmaps_polyline_sets_ref` FOREIGN KEY (`content_id`) REFERENCES `liberty_content`( `content_id` )'
+      
+    gmaps_polyline_keychain: |
+      
+      set_id I4 NOTNULL,
+      polyline_id I4 NOTNULL,
+      pos F
+      CONSTRAINT ', CONSTRAINT `gmaps_polyline_k_set_ref` FOREIGN KEY (`set_id`) REFERENCES `gmaps_polyline_sets`( `set_id` )
+      , CONSTRAINT `gmaps_polyline_k_polyline_ref` FOREIGN KEY (`polyline_id`) REFERENCES `gmaps_polylines`( `polyline_id` )'
+      
+    gmaps_polygons: |
+      
+      polygon_id I4 PRIMARY,
+      content_id I4 NOTNULL,
+      poly_data X,
+      type I4 DEFAULT 0,
+      circle_center X DEFAULT 0,
+      radius F DEFAULT 0,
+      levels_data X,
+      zoom_factor I4,
+      num_levels I4
+      CONSTRAINT ', CONSTRAINT `gmaps_polygons_ref` FOREIGN KEY (`content_id`) REFERENCES `liberty_content`( `content_id` )'
+      
+    gmaps_polygon_styles: |
+      
+      style_id I4 PRIMARY,
+      name C(64),
+      color C(6),
+      opacity F DEFAULT 1,
+      user_id I4
+      CONSTRAINTS ', CONSTRAINT `gmaps_polygon_styles_ref` FOREIGN KEY (`user_id`) REFERENCES `users_users`( `user_id` )'
+      
+    gmaps_polygon_sets: |
+      
+      set_id I4 PRIMARY,
+      content_id I4 NOTNULL,
+      style_id I4 NOTNULL,
+      polylinestyle_id I4 NOTNULL
+      CONSTRAINT ', CONSTRAINT `gmaps_polygon_sets_ref` FOREIGN KEY (`content_id`) REFERENCES `liberty_content`( `content_id` )'
+      
+    gmaps_polygon_keychain: |
+      
+      set_id I4 NOTNULL,
+      polygon_id I4 NOTNULL,
+      pos F
+      CONSTRAINT ', CONSTRAINT `gmaps_polygon_k_set_ref` FOREIGN KEY (`set_id`) REFERENCES `gmaps_polygon_sets`( `set_id` )
+      , CONSTRAINT `gmaps_polygon_k_polygon_ref` FOREIGN KEY (`polygon_id`) REFERENCES `gmaps_polygons`( `polygon_id` )'
+      
+  indexes: 
+    gmaps_gmap_id_idx: 
+      table: gmaps
+      cols: gmap_id
+      opts: UNIQUE
+  sequences: 
+    gmaps_gmap_id_seq: 
+      start: 1
+    gmaps_icon_themes_seq: 
+      start: 1
+    gmaps_maptypes_maptype_id_seq: 
+      start: 1
+    gmaps_tilelayer_id_seq: 
+      start: 1
+    gmaps_copyright_id_seq: 
+      start: 1
+    gmaps_markers_marker_id_seq: 
+      start: 1
+    gmaps_icon_styles_icon_id_seq: 
+      start: 1
+    gmaps_marker_style_id_seq: 
+      start: 1
+    gmaps_marker_sets_set_id_seq: 
+      start: 1
+    gmaps_polyline_polyline_id_seq: 
+      start: 1
+    gmaps_polyline_style_id_seq: 
+      start: 1
+    gmaps_polyline_sets_set_id_seq: 
+      start: 1
+    gmaps_polygons_polygon_id_seq: 
+      start: 1
+    gmaps_polygon_style_id_seq: 
+      start: 1
+    gmaps_polygon_sets_set_id_seq: 
+      start: 1
+  permissions: 
+    p_gmap_view: 
+      description: Can view maps
+      level: basic
+    p_gmap_view_history: 
+      description: Can view map history
+      level: basic
+    p_gmap_create: 
+      description: Can create maps
+      level: registered
+    p_gmap_update: 
+      description: Can edit maps
+      level: editor
+    p_gmap_remove: 
+      description: Can remove maps
+      level: editors
+    p_gmap_rollback: 
+      description: Can rollback version of a map
+      level: editors
+    p_gmap_admin: 
+      description: Can administrate maps
+      level: editors
+    p_gmap_attach_children: 
+      description: >
+        Can attach sets and such to maps, and
+        overlays to sets
+      level: register
+    p_gmap_overlay_view: 
+      description: Can view map overlays
+      level: basic
+    p_gmap_overlay_view_history: 
+      description: Can view map overlay history
+      level: basic
+    p_gmap_overlay_create: 
+      description: Can create overlays
+      level: registered
+    p_gmap_overlay_update: 
+      description: Can edit overlays
+      level: editor
+    p_gmap_overlay_remove: 
+      description: Can remove map overlays
+      level: editors
+    p_gmap_overlay_rollback: 
+      description: Can rollback version of a overlay
+      level: editors
+    p_gmap_overlayset_view: 
+      description: Can view map overlay sets
+      level: basic
+    p_gmap_overlayset_view_history: 
+      description: Can view map overlay sets history
+      level: basic
+    p_gmap_overlayset_create: 
+      description: Can create overlay sets
+      level: registered
+    p_gmap_overlayset_update: 
+      description: Can edit overlay sets
+      level: editor
+    p_gmap_overlayset_remove: 
+      description: Can remove map overlay sets
+      level: editors
+    p_gmap_overlayset_rollback: 
+      description: Can rollback version of a overlay set
+      level: editors
+  preferences: 
+    gmap_scale: false
+    gmap_maptype_control: true
+    gmap_zoom_control: s
+    gmap_overview_control: true
+    gmap_map_type: 0
