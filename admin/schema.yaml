@@ -327,3 +327,11 @@ gmap:
     gmap_zoom_control: s
     gmap_overview_control: true
     gmap_map_type: 0
+  contenttypes:
+    BitGmap: BitGmap.php
+    BitGmapMarker: BitGmapMarker.php
+    BitGmapMarkerSet: BitGmapMarkerSet.php
+    BitGmapPolygon: BitGmapPolygon.php
+    BitGmapPolygonSet: BitGmapPolygonSet.php
+    BitGmapPolyline: BitGmapPolyline.php
+    BitGmapPolylineSet: BitGmapPolylineSet.php
