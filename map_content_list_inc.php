@@ -82,6 +82,7 @@ if ( $gBitSystem->isPackageActive('geo') &&
 		$_REQUEST['output'] = 'raw';
 		//forces only geo located data
 		$_REQUEST['geo_notnull'] = TRUE;
+		$cListRequest = $_REQUEST;
 		include_once( LIBERTY_PKG_PATH.'list_content.php' );
 		$gBitSmarty->assign_by_ref('listcontent', $contentList);
 	}
