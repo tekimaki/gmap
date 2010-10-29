@@ -83,7 +83,7 @@
 	</div>
 	{/if}
 	
-	<div class="row submit">
+	<div class="buttonHolder row submit">
 		<input type="button" name="save_polygon_btn" value="Save" onclick="javascript:BitMap.EditSession.storePolygon( this.form );" />
 	</div>
 {/form}

@@ -60,7 +60,7 @@
 	</div>
 	{/if}
 	
-	<div class="row submit">
+	<div class="buttonHolder row submit">
 		<input type="button" name="savenewpolygonset" value="Save" onclick="javascript:BitMap.EditSession.storePolygonSet( this.form );" />
 		<input type="button" name="closepolygonsetform" value="Close Options Editing" onclick="javascript:BitMap.EditSession.cancelEditPolygonSet()" />
 	</div>

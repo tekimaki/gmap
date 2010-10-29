@@ -30,7 +30,7 @@
 				{formhelp note=""}
 			{/forminput}
 	</div>
-	<div class="row submit">
+	<div class="buttonHolder row submit">
 		<input type="button" name="save_polylinestyle_btn" value="Save" onclick="javascript:BitMap.EditSession.storePolylineStyle( this.form );" />
 	</div>
 {/form}

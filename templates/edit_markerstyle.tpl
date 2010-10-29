@@ -47,7 +47,7 @@
 				{formhelp note=""}
 			{/forminput}
 	</div>
-	<div class="row submit">
+	<div class="buttonHolder row submit">
 		<input type="button" name="save_markerstyle_btn" value="Save" onclick="javascript:BitMap.EditSession.storeMarkerStyle( this.form );" />
 	</div>
 {/form}

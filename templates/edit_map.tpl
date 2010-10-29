@@ -149,7 +149,7 @@
 
 			{include file="bitpackage:liberty/edit_services_inc.tpl" serviceFile="content_edit_mini_tpl"}
 
-			<div class="row submit">
+			<div class="buttonHolder row submit">
 				<input type="button" name="save_map_btn" value="Save" onclick="BitMap.EditSession.storeMap( this.form );" />
 			</div>
 

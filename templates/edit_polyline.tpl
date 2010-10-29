@@ -69,7 +69,7 @@
 	</div>
 	{/if}
 
-	<div class="row submit">
+	<div class="buttonHolder row submit">
 		<input type="button" name="save_polyline_btn" value="Save" onclick="javascript:BitMap.EditSession.storePolyline( this.form );" />
 	</div>
 {/form}

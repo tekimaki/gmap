@@ -76,7 +76,7 @@
 
 			{include file="bitpackage:liberty/edit_services_inc.tpl" serviceFile="content_edit_mini_tpl"}
 
-			<div class="row submit">
+			<div class="buttonHolder row submit">
 				<input type="button" name="save_marker_btn" value="Save" onclick="javascript:BitMap.EditSession.storeMarker( this.form );" />
 			</div>
 

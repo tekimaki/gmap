@@ -91,7 +91,7 @@ form.style_id.options[OptionN + d] = new Option( this.Map.markerstyles[d].name, 
 	</div>
 	{/if}
 	
-	<div class="row submit">
+	<div class="buttonHolder row submit">
 		<input type="button" name="savenewmarkerset" value="Save" onclick="javascript:BitMap.EditSession.storeMarkerSet( this.form );"/>
 		<input type="button" name="closemarkersetform" value="Close Options Editing" onclick="javascript:BitMap.EditSession.cancelEditMarkerSet()"/>
 	</div>		

@@ -124,7 +124,7 @@
 				{formhelp note=""}
 			{/forminput}
 	</div>
-	<div class="row submit">
+	<div class="buttonHolder row submit">
 		<input type="button" name="save_iconstyle_btn" value="Save" onclick="javascript:BitMap.EditSession.storeIconStyle( this.form );" />
 	</div>
 {/form}

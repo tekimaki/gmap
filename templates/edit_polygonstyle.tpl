@@ -23,7 +23,7 @@
 				{formhelp note=""}
 			{/forminput}
 	</div>
-	<div class="row submit">
+	<div class="buttonHolder row submit">
 		<input type="button" name="save_polygonstyle_btn" value="Save" onclick="javascript:BitMap.EditSession.storePolygonStyle( this.form );" />
 	</div>
 {/form}

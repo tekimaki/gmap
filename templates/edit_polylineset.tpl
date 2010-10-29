@@ -48,7 +48,7 @@
 	</div>
 	{/if}
 
-	<div class="row submit">
+	<div class="buttonHolder row submit">
 		<input type="button" name="savenewpolylineset" value="Save" onclick="javascript:BitMap.EditSession.storePolylineSet( this.form );"/>
 		<input type="button" name="closepolylinesetform" value="Close Options Editing" onclick="javascript:BitMap.EditSession.cancelEditPolylineSet()"/>
 	</div>

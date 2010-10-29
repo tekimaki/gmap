@@ -72,7 +72,7 @@
 			{/legend}
 		{/jstab}
 	{/jstabs}
-	<div class="row submit">
+	<div class="buttonHolder row submit">
 		<input type="submit" name="gmap_preferences" value="{tr}Change Preferences{/tr}" />
 	</div>
 {/form}

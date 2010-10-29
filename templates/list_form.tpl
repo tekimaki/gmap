@@ -67,7 +67,7 @@
 				</div>
 			</div>
 
-		<div class="row submit">
+		<div class="buttonHolder row submit">
 			<div id="gmap-block-viewaslist" style="float:right; margin-right:10px; {if !$listInfo}display:none;{/if}">
 				{if $smarty.const.ACTIVE_PACKAGE == 'gmap'}
 					{if $smarty.request.content_type_guid[0] != 'bitgmap'}
